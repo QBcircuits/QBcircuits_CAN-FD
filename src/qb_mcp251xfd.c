@@ -373,8 +373,6 @@ void mcp251xfd_msg_write(chnCAN *ptrChn,unsigned long id,uint8_t ide,uint8_t fdf
 	for(idx=0;idx<bufLen;idx++){									// loop thru buffer
 		ptrChn->msg.txData[idx] = buf_u8[idx];
 	}
-//	ptrChn->msg.r0 = 0xee;
-//	ptrChn->msg.r1 = 0xcc;
 }
 /**************************************************************************************************
 Purpose: 	Sets up the GPIO interface/pins for both MCP2517 channels and configures the SPI hardware
@@ -473,8 +471,8 @@ uint8_t mcp251xfd_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufId
 
 	// Setup register write packet - C1DBTCFG -------------------------------------------------------------------------------------------------------
 //	mcp251xfd_reg_prep(ptrChn,1,0x00,0x1E,0x07,0x07);				// B3(BRP=0) B2(TSEG1=30) B1(TSEG2=7) B0(SJW=7)[1MHz] (tested at 250mm)
-//	mcp251xfd_reg_prep(ptrChn,1,0x00,0x0E,0x03,0x03);				// B3(BRP=0) B2(TSEG1=14) B1(TSEG2=3) B0(SJW=3)[2MHz] (tested at 250mm)
-	mcp251xfd_reg_prep(ptrChn,1,0x00,0x06,0x01,0x01);				// B3(BRP=0) B2(TSEG1=6)  B1(TSEG2=1) B0(SJW=1)[4MHz] (tested at 250mm)
+	mcp251xfd_reg_prep(ptrChn,1,0x00,0x0E,0x03,0x03);				// B3(BRP=0) B2(TSEG1=14) B1(TSEG2=3) B0(SJW=3)[2MHz] (tested at 250mm)
+//	mcp251xfd_reg_prep(ptrChn,1,0x00,0x06,0x01,0x01);				// B3(BRP=0) B2(TSEG1=6)  B1(TSEG2=1) B0(SJW=1)[4MHz] (tested at 250mm)
 //	mcp251xfd_reg_prep(ptrChn,1,0x00,0x04,0x01,0x01);				// B3(BRP=0) B2(TSEG1=4)  B1(TSEG2=1) B0(SJW=1)[5MHz] (Unable to prove out)
 	mcp251xfd_write_register(ADDR_C1DBTCFG,ptrChn,4);				// write register data bytes
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
