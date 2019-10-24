@@ -10,12 +10,12 @@
   Written by Brother Q for QBcircuits
   All text above must be included in any redistribution
  ****************************************************/
-#ifndef	QB_MCP2517_H
-#define	QB_MCP2517_H
+#ifndef	QB_MCP251XFD_H
+#define	QB_MCP251XFD_H
 
 #include <inttypes.h>
-#include "qb_mcp2517_defs.h"
-#include "qb_mcp2517_global.h"
+#include "qb_mcp251xfd_defs.h"
+#include "qb_mcp251xfd_global.h"
 #ifdef __cplusplus
 
 extern "C"
@@ -163,32 +163,32 @@ typedef struct{
 uint8_t 		spi_putChr(uint8_t data);
 uint8_t 		spi_putCmd(uint8_t cmd,uint16_t addr );
 
-void 			mcp2517_cs_clr(uint8_t chnNum);
-void 			mcp2517_cs_set(uint8_t chnNum);
-void 			mcp2517_read_register(uint16_t addr,chnCAN *ptrChn,uint8_t dataNum);
-void 			mcp2517_write_register(uint16_t addr,chnCAN *ptrChn,uint8_t dataNum);
+void 			mcp251xfd_cs_clr(uint8_t chnNum);
+void 			mcp251xfd_cs_set(uint8_t chnNum);
+void 			mcp251xfd_read_register(uint16_t addr,chnCAN *ptrChn,uint8_t dataNum);
+void 			mcp251xfd_write_register(uint16_t addr,chnCAN *ptrChn,uint8_t dataNum);
 
-uint8_t 		mcp2517_read_memory(uint8_t bufIdx,chnCAN *ptrChn);
-uint8_t 		mcp2517_write_memory(uint8_t bufIdx,chnCAN *ptrChn);
-uint8_t 		mcp2517_check_message(chnCAN *ptrChn);
-uint8_t 		mcp2517_start_transmit(uint8_t bufIdx,chnCAN *ptrChn);
-void 			mcp2517_msg_write(chnCAN *ptrChn,unsigned long id,uint8_t ide,uint8_t fdf,uint8_t brs,uint8_t rtr,uint8_t bufLen,uint8_t *buf_u8);
+uint8_t 		mcp251xfd_read_memory(uint8_t bufIdx,chnCAN *ptrChn);
+uint8_t 		mcp251xfd_write_memory(uint8_t bufIdx,chnCAN *ptrChn);
+uint8_t 		mcp251xfd_check_message(chnCAN *ptrChn);
+uint8_t 		mcp251xfd_start_transmit(uint8_t bufIdx,chnCAN *ptrChn);
+void 			mcp251xfd_msg_write(chnCAN *ptrChn,unsigned long id,uint8_t ide,uint8_t fdf,uint8_t brs,uint8_t rtr,uint8_t bufLen,uint8_t *buf_u8);
 
-void 			mcp2517_init_hardware(uint8_t chnNum);
-uint8_t 		mcp2517_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufIdxTx,uint8_t bufIdxRx);
-uint8_t 		mcp2517_reg_compr(uint8_t *ptrBuf0,uint8_t *ptrBuf1,uint8_t dataNum);
-uint8_t 		mcp2517_fltr_setup(chnCAN *ptrChn,uint8_t bufIdx,uint8_t fltrNum,uint8_t fltrIdx,uint8_t fltrType,unsigned long msgId,unsigned long mskId);
+void 			mcp251xfd_init_hardware(uint8_t chnNum);
+uint8_t 		mcp251xfd_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufIdxTx,uint8_t bufIdxRx);
+uint8_t 		mcp251xfd_reg_compr(uint8_t *ptrBuf0,uint8_t *ptrBuf1,uint8_t dataNum);
+uint8_t 		mcp251xfd_fltr_setup(chnCAN *ptrChn,uint8_t bufIdx,uint8_t fltrNum,uint8_t fltrIdx,uint8_t fltrType,unsigned long msgId,unsigned long mskId);
 
 
-uint8_t 		mcp2517_mem_payload(uint8_t fdf,uint8_t dlc);
-uint8_t 		mcp2517_len_payload(uint8_t fdf,uint8_t dlc);
-uint8_t 		mcp2517_dlc_payload(uint8_t fdf,uint8_t bufLen);
-unsigned long 	mcp2517_id_calc(chnCAN *ptrChn);
-void 			mcp2517_tstamp_calc(chnCAN *ptrChn);
-void 			mcp2517_reg_prep(chnCAN *ptrChn, uint8_t bitRdWr, uint8_t byte3, uint8_t byte2, uint8_t byte1, uint8_t byte0);
+uint8_t 		mcp251xfd_mem_payload(uint8_t fdf,uint8_t dlc);
+uint8_t 		mcp251xfd_len_payload(uint8_t fdf,uint8_t dlc);
+uint8_t 		mcp251xfd_dlc_payload(uint8_t fdf,uint8_t bufLen);
+unsigned long 	mcp251xfd_id_calc(chnCAN *ptrChn);
+void 			mcp251xfd_tstamp_calc(chnCAN *ptrChn);
+void 			mcp251xfd_reg_prep(chnCAN *ptrChn, uint8_t bitRdWr, uint8_t byte3, uint8_t byte2, uint8_t byte1, uint8_t byte0);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	// QB_MCP2517_H
+#endif	// QB_MCP2517XFD_H

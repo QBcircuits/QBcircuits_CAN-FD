@@ -10,8 +10,8 @@
   Written by Brother Q for QBcircuits
   All text above must be included in any redistribution
  ****************************************************/
-#ifndef	QB_MCP2517_GLOBAL_H
-#define	QB_MCP2517_GLOBAL_H
+#ifndef	QB_MCP251XFD_GLOBAL_H
+#define	QB_MCP251XFD_GLOBAL_H
 
 // ----------------------------------------------------------------------------
 #define	RESET(x)		_XRS(x)							// x = (@,#); @=Port letter,#=Port number; Ex. x=B,0(Refers to PB0)
@@ -38,4 +38,4 @@
 #define	_ddr2(x)		DDR ## x						// ##(concatenation) x=@; @=Port letter; Ex. x=B (_ddr2(x)=DDRB)
 #define	_pin2(x)		PIN ## x						// ##(concatenation) x=@; @=Port letter; Ex. x=B (_pin2(x)=PINB)
 
-#endif	// QB_MCP2517_GLOBAL_H
+#endif	// QB_MCP2517XFD_GLOBAL_H

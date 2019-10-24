@@ -10,8 +10,8 @@
   Written by Brother Q for QBcircuits
   All text above must be included in any redistribution
  ****************************************************/
-#ifndef	QB_MCP2517_DEFS_H
-#define	QB_MCP2517_DEFS_H
+#ifndef	QB_MCP251XFD_DEFS_H
+#define	QB_MCP251XFD_DEFS_H
 
 /**************************************************************************************************
 SPI Instructions from MCP2517FD manual Table 4-1 
@@ -451,4 +451,4 @@ CAN FD Controller Module (SFR) from MCP2517FD manual Table 3-2
 #define MSID11				0x05
 #define MIDE				0x06
 
-#endif	// QB_MCP2517_DEFS_H
+#endif	// QB_MCP2517XFD_DEFS_H
