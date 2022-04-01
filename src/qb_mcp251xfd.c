@@ -531,7 +531,7 @@ uint8_t mcp251xfd_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufId
 		return 122;													// return fault code for this register write error
 	
 	// Setup register write packet - C1CON ----------------------------------------------------------------------------------------------------------
-	mcp251xfd_reg_prep(ptrChn,1,0x00,0x98,0x07,0x40);				// B3(TXBWS=ABAT=REQOP=0) B2(OPMOD=4;TXQEN=STEF=1;SERR2LOM=ESIGM=RTXAT=0) B1(BRSDIS=0;WFT=3;WAKFIL=1) B0(PXEDIS=1;ISOCRCEN=DNCNT=0)
+	mcp251xfd_reg_prep(ptrChn,1,0x00,0x18,0x07,0x40);				// B3(TXBWS=ABAT=REQOP=0) B2(OPMOD=0;TXQEN=STEF=1;SERR2LOM=ESIGM=RTXAT=0) B1(BRSDIS=0;WFT=3;WAKFIL=1) B0(PXEDIS=1;ISOCRCEN=DNCNT=0)
 	mcp251xfd_write_register(ADDR_C1CON,ptrChn,4);					// write register data bytes
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
 	mcp251xfd_read_register(ADDR_C1CON,ptrChn,4);					// read register data bytes 
