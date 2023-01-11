@@ -182,11 +182,11 @@ uint8_t mcp251xfd_read_memory(uint8_t bufIdx,chnCAN *ptrChn){
 	
 	tStamp = (ptrChn->regRd[0]>>RXTSEN) & 1;						// Save RX timestamp enable bit
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
-	mcp251xfd_read_register(C1FIFOSTA(bufNum),ptrChn,4);				// read in contents of FIFO status register
+	mcp251xfd_read_register(C1FIFOSTA(bufNum),ptrChn,4);			// read in contents of FIFO status register
 	if(!((ptrChn->regRd[0]>>TFNRFNIF) & 1))							// check if FIFO is full
 		return ERR_FIFOEMPTY;										// return error code
 		
-	mcp251xfd_read_register(C1FIFOUA(bufNum),ptrChn,4);			// read in contents of user address register
+	mcp251xfd_read_register(C1FIFOUA(bufNum),ptrChn,4);				// read in contents of user address register
 
 	memAddr = ptrChn->regRd[1];										// set upper byte of buffer memory address
 	memAddr = ((memAddr << 8) | ptrChn->regRd[0]) + 0x400;			// finalize the buffer memory address
@@ -247,7 +247,7 @@ uint8_t mcp251xfd_write_memory(uint8_t bufIdx,chnCAN *ptrChn){
 		if(!((ptrChn->regRd[0]>>TXQNIF) & 1))						// check if TXQ buffer is full
 			return ERR_TXQFULL;										// return error code
 			
-		mcp251xfd_read_register(ADDR_C1TXQUA,ptrChn,4);			// read in contents of TXQ user address register
+		mcp251xfd_read_register(ADDR_C1TXQUA,ptrChn,4);				// read in contents of TXQ user address register
 	}
 	else{															// working with TX FIFO
 		mcp251xfd_read_register(C1FIFOCON(bufNum),ptrChn,4);		// read in contents of FIFO config register
@@ -259,7 +259,7 @@ uint8_t mcp251xfd_write_memory(uint8_t bufIdx,chnCAN *ptrChn){
 		if(!((ptrChn->regRd[0]>>TFNRFNIF) & 1))						// check if FIFO is full
 			return ERR_FIFOFULL;									// return error code
 			
-		mcp251xfd_read_register(C1FIFOUA(bufNum),ptrChn,4);		// read in contents of user address register
+		mcp251xfd_read_register(C1FIFOUA(bufNum),ptrChn,4);			// read in contents of user address register
 	}
 	memAddr = ptrChn->regRd[1];										// set upper byte of buffer memory address
 	memAddr = ((memAddr << 8) | ptrChn->regRd[0]) + 0x400;			// finalize the buffer memory address
@@ -316,7 +316,7 @@ uint8_t mcp251xfd_start_transmit(uint8_t bufIdx,chnCAN *ptrChn){
 		if((ptrChn->regRd[0]>>TXQEIF) & 1)							// check if TXQ buffer is empty
 			return ERR_TXQEMPTY;									// return error code
 			
-		mcp251xfd_read_register(ADDR_C1TXQUA,ptrChn,4);			// read in contents of TXQ user address register
+		mcp251xfd_read_register(ADDR_C1TXQUA,ptrChn,4);				// read in contents of TXQ user address register
 	}
 	else{															// working with TX FIFO
 		mcp251xfd_read_register(C1FIFOCON(bufNum),ptrChn,4);		// read in contents of FIFO config register
@@ -441,7 +441,7 @@ uint8_t mcp251xfd_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufId
 	ptrChn->regWr[0] = 0x40;										// CLKODIV=10;SCLKDIV=OSCDIS=PLLEN=0
 	mcp251xfd_write_register(ADDR_OSC,ptrChn,0);					// write register data bytes
 	for(idx=0;idx<CSCNT;idx++);
-	mcp251xfd_read_register(ADDR_OSC,ptrChn,0);					// read register data bytes 
+	mcp251xfd_read_register(ADDR_OSC,ptrChn,0);						// read register data bytes 
 	if(!mcp251xfd_reg_compr(&ptrChn->regWr,&ptrChn->regRd,0))		// data did not write to the MCP2517
 		return 10;													// return fault code for this register write error
 	
@@ -518,7 +518,7 @@ uint8_t mcp251xfd_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufId
 	mcp251xfd_reg_prep(ptrChn,1,0xE0,0x40,0x04,0x80);				// B3(PLSIZE=7;FSIZE=0) B2(TXAT=2;TXPRI=0) B1(FRESET=1;TXREQ=UNIC=0) B0(TXEN=1;TXATIE=TXQEIE=TXQNIE=0)
 	mcp251xfd_write_register(C1FIFOCON(txIdx),ptrChn,4);			// write register data bytes
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
-	mcp251xfd_read_register(C1FIFOCON(txIdx),ptrChn,4);			// read register data bytes
+	mcp251xfd_read_register(C1FIFOCON(txIdx),ptrChn,4);				// read register data bytes
 	if(!mcp251xfd_reg_compr(&ptrChn->regWr,&ptrChn->regRd,4))		// data did not write to the MCP2517
 		return 119;													// return fault code for this register write error
 		
@@ -526,14 +526,27 @@ uint8_t mcp251xfd_init(uint8_t speed,chnCAN *ptrChn,uint8_t chnNum,uint8_t bufId
 	mcp251xfd_reg_prep(ptrChn,1,0xE3,0x60,0x04,0x21);				// B3(PLSIZE=7;FSIZE=3) B2(TXAT=3;TXPRI=0) B1(FRESET=1;TXREQ=UNIC=0) B0(TXEN=RTREN=TXATIE=RXOVIE=TFERFFIE=TFHRFHIE=0;TRNRFNIE=RXTSEN=1)
 	mcp251xfd_write_register(C1FIFOCON(rxIdx),ptrChn,4);			// write register data bytes
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
-	mcp251xfd_read_register(C1FIFOCON(rxIdx),ptrChn,4);			// read register data bytes 
+	mcp251xfd_read_register(C1FIFOCON(rxIdx),ptrChn,4);				// read register data bytes 
 	if(!mcp251xfd_reg_compr(&ptrChn->regWr,&ptrChn->regRd,4))		// data did not write to the MCP2517
 		return 122;													// return fault code for this register write error
 	
 	// Setup register write packet - C1CON ----------------------------------------------------------------------------------------------------------
-	mcp251xfd_reg_prep(ptrChn,1,0x00,0x18,0x07,0x40);				// B3(TXBWS=ABAT=REQOP=0) B2(OPMOD=0;TXQEN=STEF=1;SERR2LOM=ESIGM=RTXAT=0) B1(BRSDIS=0;WFT=3;WAKFIL=1) B0(PXEDIS=1;ISOCRCEN=DNCNT=0)
-	mcp251xfd_write_register(ADDR_C1CON,ptrChn,4);					// write register data bytes
+	mcp251xfd_reg_prep(ptrChn,1,0x04,0x98,0x07,0x40);				// B3(TXBWS=ABAT=0;REQOP=4) B2(OPMOD=0;TXQEN=STEF=1;SERR2LOM=ESIGM=RTXAT=0) B1(BRSDIS=0;WFT=3;WAKFIL=1) B0(PXEDIS=1;ISOCRCEN=DNCNT=0)
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
+	mcp251xfd_write_register(ADDR_C1CON,ptrChn,3);					// write register data bytes
+	for(idx=0;idx<CSCNT;idx++);					
+	mcp251xfd_write_register(ADDR_C1CON,ptrChn,2);					// write register data bytes
+	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
+	mcp251xfd_write_register(ADDR_C1CON,ptrChn,1);					// write register data bytes
+	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
+	mcp251xfd_write_register(ADDR_C1CON,ptrChn,0);					// write register data bytes
+	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
+	mcp251xfd_reg_prep(ptrChn,1,0x00,0x18,0x07,0x40);				// B3(TXBWS=ABAT=REQOP=0) B2(OPMOD=0;TXQEN=STEF=1;SERR2LOM=ESIGM=RTXAT=0) B1(BRSDIS=0;WFT=3;WAKFIL=1) B0(PXEDIS=1;ISOCRCEN=DNCNT=0)
+	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
+	mcp251xfd_write_register(ADDR_C1CON,ptrChn,4);					// write register data bytes
+	for(idx=0;idx<CSCNT;idx++);									// delay for toggling CS
+	mcp251xfd_write_register(ADDR_C1CON,ptrChn,4);					// write register data bytes
+	for(idx=0;idx<CSCNT;idx++);									// delay for toggling CS
 	mcp251xfd_read_register(ADDR_C1CON,ptrChn,4);					// read register data bytes 
 	if(!mcp251xfd_reg_compr(&ptrChn->regWr,&ptrChn->regRd,4))		// data did not write to the MCP2517
 		return 199;													// return fault code for this register write error
@@ -624,7 +637,7 @@ uint8_t mcp251xfd_fltr_setup(chnCAN *ptrChn,uint8_t bufIdx,uint8_t fltrNum,uint8
 	ptrChn->regWr[2] = (mskId >> 16);								// MEID<12:5>
 	ptrChn->regWr[1] = (mskId >> 8);								// MEID<4:0>;MSID<7:0>
 	ptrChn->regWr[0] = (mskId >> 0);								// MSID<7:0>
-	mcp251xfd_write_register(C1MASK(fltrMsk),ptrChn,4);			// write register data bytes
+	mcp251xfd_write_register(C1MASK(fltrMsk),ptrChn,4);				// write register data bytes
 	
 	for(idx=0;idx<CSCNT;idx++);										// delay for toggling CS
 	mcp251xfd_read_register(C1MASK(fltrMsk),ptrChn,4);				// read register data bytes 
@@ -793,15 +806,3 @@ void mcp251xfd_reg_prep(chnCAN *ptrChn, uint8_t bitRdWr, uint8_t byte3, uint8_t 
 		ptrChn->regRd[0] = byte0;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
